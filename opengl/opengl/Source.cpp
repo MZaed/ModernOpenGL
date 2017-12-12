@@ -2,6 +2,49 @@
 #include <GLFW/glfw3.h>
 
 #include <iostream>
+#include <fstream>
+#include <string>
+#include <sstream>
+
+struct shaderProgramSourceType
+{
+	std::string vertexSource;
+	std::string fragmentSource;
+};
+
+static shaderProgramSourceType ParseShader(std::string& filePath)
+{
+	enum class ShaderType
+	{
+		NONE = -1, VERTEX = 0, FRAGMENT = 1
+	};
+
+	std::ifstream stream(filePath);
+	std::string line;
+	std::stringstream ss[2];
+	ShaderType shaderType = ShaderType::NONE; 
+
+	while(getline(stream, line))
+	{
+		if(line.find("SHADER") != std::string::npos){
+			if(line.find("VERTEX") != std::string::npos){
+				shaderType = ShaderType::VERTEX;
+
+			} else if (line.find("FRAGMENT") != std::string::npos){
+				shaderType = ShaderType::FRAGMENT;			
+
+			} else {
+				//not expected to reach here
+				shaderType = ShaderType::NONE;
+			}
+
+		} else {
+			ss[(int)shaderType] << line << '\n';
+		}
+	}
+
+	return {ss[(int)ShaderType::VERTEX].str(), ss[(int)ShaderType::FRAGMENT].str()};
+}
 
 
 static GLuint CompileShader(const std::string& source, GLenum type)
@@ -26,6 +69,8 @@ static GLuint CompileShader(const std::string& source, GLenum type)
 
 	return shaderID;
 }
+
+
 static GLuint CreateShader(const std::string& vertexShader, const std::string& fragmentShader)
 {
 	GLuint program	= glCreateProgram();
@@ -100,27 +145,10 @@ int main(void)
 		BUFFER_1_POSITION_STRIDE_BYES, BUFFER_1_POSITION_OFFSET_POINTER);
 	glEnableVertexAttribArray(BUFFER_1_POSITION_INDEX);
 
-	std::string vertexShader = 
-		"#version 330 core\n"
-		"layout(location = 0) in vec4 position;"
-		"\n"
-		"void main()\n"
-		"{\n"
-		"	gl_Position  = position;\n"
-		"}\n";
 
-
-	std::string fragmentShader = 
-		"#version 330 core\n"
-		"layout(location = 0) out vec4 color;"
-		"\n"
-		"void main()\n"
-		"{\n"
-		"	color  = vec4(1.0, 0.0, 0.0, 1.0);\n"
-		"}\n";
-		
-
-	GLuint program = CreateShader(vertexShader, fragmentShader);
+	shaderProgramSourceType shaderSource = ParseShader((std::string)"res/shaders/basic.shader");
+	
+	GLuint program = CreateShader(shaderSource.vertexSource, shaderSource.fragmentSource);
 	glUseProgram(program);
 
 	/* Loop until the user closes the window */
@@ -137,6 +165,8 @@ int main(void)
 		/* Poll for and process events */
 		glfwPollEvents();
 	}
+
+	glDeleteProgram(program);
 
 	glfwTerminate();
 	return 0;
