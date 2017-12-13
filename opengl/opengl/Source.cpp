@@ -22,48 +22,51 @@ static shaderProgramSourceType ParseShader(std::string& filePath)
 	std::ifstream stream(filePath);
 	std::string line;
 	std::stringstream ss[2];
-	ShaderType shaderType = ShaderType::NONE; 
+	ShaderType shaderType = ShaderType::NONE;
 
-	while(getline(stream, line))
+	while (getline(stream, line))
 	{
-		if(line.find("SHADER") != std::string::npos){
-			if(line.find("VERTEX") != std::string::npos){
+		if (line.find("SHADER") != std::string::npos) {
+			if (line.find("VERTEX") != std::string::npos) {
 				shaderType = ShaderType::VERTEX;
 
-			} else if (line.find("FRAGMENT") != std::string::npos){
-				shaderType = ShaderType::FRAGMENT;			
+			}
+			else if (line.find("FRAGMENT") != std::string::npos) {
+				shaderType = ShaderType::FRAGMENT;
 
-			} else {
+			}
+			else {
 				//not expected to reach here
 				shaderType = ShaderType::NONE;
 			}
 
-		} else {
+		}
+		else {
 			ss[(int)shaderType] << line << '\n';
 		}
 	}
 
-	return {ss[(int)ShaderType::VERTEX].str(), ss[(int)ShaderType::FRAGMENT].str()};
+	return{ ss[(int)ShaderType::VERTEX].str(), ss[(int)ShaderType::FRAGMENT].str() };
 }
 
 
 static GLuint CompileShader(const std::string& source, GLenum type)
 {
-	GLuint shaderID	= glCreateShader(type);
-	const char* src	= source.c_str();
+	GLuint shaderID = glCreateShader(type);
+	const char* src = source.c_str();
 	glShaderSource(shaderID, 1, &src, nullptr);
 	glCompileShader(shaderID);
 
-	
-	int result = 0; 
+
+	int result = 0;
 	glGetShaderiv(shaderID, GL_COMPILE_STATUS, &result);
-	if(result == GL_FALSE){
+	if (result == GL_FALSE) {
 		int length = 0;
 		glGetShaderiv(shaderID, GL_INFO_LOG_LENGTH, &length);
 		char* message = (char*)alloca(sizeof(char) * length);
 		glGetShaderInfoLog(shaderID, length, &length, message);
 		std::cout << "Failed to compile shader" << std::endl;
-		std::cout << (type == GL_VERTEX_SHADER ? "vertex" : "fragment") << "shader" 
+		std::cout << (type == GL_VERTEX_SHADER ? "vertex" : "fragment") << "shader"
 			<< std::endl;
 	}
 
@@ -73,8 +76,8 @@ static GLuint CompileShader(const std::string& source, GLenum type)
 
 static GLuint CreateShader(const std::string& vertexShader, const std::string& fragmentShader)
 {
-	GLuint program	= glCreateProgram();
-	
+	GLuint program = glCreateProgram();
+
 	GLuint vs = CompileShader(vertexShader, GL_VERTEX_SHADER);
 	GLuint fs = CompileShader(fragmentShader, GL_FRAGMENT_SHADER);
 
@@ -110,44 +113,85 @@ int main(void)
 	/* Make the window's context current */
 	glfwMakeContextCurrent(window);
 
-	if(GLEW_OK != glewInit()){
+	if (GLEW_OK != glewInit()) {
 		std::cout << "Error:: glewInit failed" << std::endl;
 	}
 
 	std::cout << glGetString(GL_VERSION) << std::endl;
 
+
+
+	// 3+--------------------------------.2 
+	//  |                              ,'|  
+	//  |                           ,-`  |  
+	//  |                         ,'     |  
+	//  |                       .`       |  
+	//  |                     .`         |  
+	//  |                   ,'           |  
+	//  |                ,-`             |  
+	//  |              ,'                |  
+	//  |            .`                  |  
+	//  |          .`                    |  
+	//  |        ,'                      |  
+	//  |     ,-`                        |  
+	//  |   ,'                           |  
+	//  | .`                             |  
+	// 0-`-------------------------------+1 
+
+
+
+	//Vertex Buffers
 	//Buffer ID's
-	GLuint	bufferID1 = 0;
+	GLuint	buffer1 = 0;
 
 	//Buffer Size
-	const unsigned int BUFFER_1_SIZE	= 6U;
+	const unsigned int BUFFER_1_SIZE = 8U;
 
 	//Buffer data info
-	const unsigned int BUFFER_1_POSITION_INDEX		= 0U;
-	const unsigned int BUFFER_1_POSITION_STRIDE_BYES= 2U * sizeof(float);
-	const unsigned int BUFFER_1_POSITION_SIZE		= 2U;
-	const void*	BUFFER_1_POSITION_OFFSET_POINTER	= NULL;
+	const unsigned int BUFFER_1_POSITION_INDEX = 0U;
+	const unsigned int BUFFER_1_POSITION_STRIDE_BYES = 2U * sizeof(float);
+	const unsigned int BUFFER_1_POSITION_SIZE = 2U;
+	const void*	BUFFER_1_POSITION_OFFSET_POINTER = NULL;
 
 
 	//Buffer Data
-	float	bufferData1[BUFFER_1_SIZE] =	{
-									-0.5f, -0.5f,
-									0.0f, 0.5f,
-									0.5f, -0.5f
-								};	
+	float	bufferData1[BUFFER_1_SIZE] = {
+									-0.5f, -0.5f, //0
+									 0.5f, -0.5f, //1
+									 0.5f,  0.5f, //2
+									-0.5f,  0.5f  //3
+	};
 
-	glGenBuffers(1, &bufferID1);
+	glGenBuffers(1, &buffer1);
 
 	//Buffer linking and assigning data
-	glBindBuffer(GL_ARRAY_BUFFER, bufferID1);
+	glBindBuffer(GL_ARRAY_BUFFER, buffer1);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(bufferData1), bufferData1, GL_STATIC_DRAW);
 	glVertexAttribPointer(BUFFER_1_POSITION_INDEX, BUFFER_1_POSITION_SIZE, GL_FLOAT, GL_FALSE,
 		BUFFER_1_POSITION_STRIDE_BYES, BUFFER_1_POSITION_OFFSET_POINTER);
 	glEnableVertexAttribArray(BUFFER_1_POSITION_INDEX);
 
+	//Index Buffer
+	GLuint index1 = 0;
+
+	//Index Buffer Data info
+	const unsigned int INDEX_BUFFER_1_SIZE = 6U;
+	const unsigned int INDEX_BUFFER_1_INDEX = 0U;
+
+	//Index Buffer Data
+	unsigned int indexBufferData[INDEX_BUFFER_1_SIZE] = {
+										0,	1,	2,
+										2,	3,	0
+	};
+
+	glGenBuffers(1, &index1);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index1);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indexBufferData), indexBufferData, GL_STATIC_DRAW);
+
+
 
 	shaderProgramSourceType shaderSource = ParseShader((std::string)"res/shaders/basic.shader");
-	
+
 	GLuint program = CreateShader(shaderSource.vertexSource, shaderSource.fragmentSource);
 	glUseProgram(program);
 
@@ -157,7 +201,7 @@ int main(void)
 		/* Render here */
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		glDrawArrays(GL_TRIANGLES, 0, BUFFER_1_SIZE/2);
+		glDrawElements(GL_TRIANGLES, INDEX_BUFFER_1_SIZE, GL_UNSIGNED_INT, nullptr);
 
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);
