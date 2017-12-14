@@ -6,6 +6,30 @@
 #include <string>
 #include <sstream>
 
+#define ASSERT(x)	if(!(x)) __debugbreak();
+#define GLCALL(x)	GLClearError();\
+					x;\
+					ASSERT(GLErrorLog(#x, __FILE__, __LINE__))
+
+void GLClearError(void)
+{
+	while(glGetError() != GL_NO_ERROR){
+		//do nothing
+	}
+}
+
+bool GLErrorLog(char* functionName, char* file, int line)
+{
+	while(GLenum error = glGetError()){
+		std::cout << "GL Error: [" << error << "]" << std::endl;
+		std::cout << "Funcation Name: " << functionName << std::endl;
+		std::cout << "File Name: " << file << " at Line no. '" << line << "'" << std::endl; 
+		return false;
+	}
+
+	return true;
+}
+
 struct shaderProgramSourceType
 {
 	std::string vertexSource;
@@ -201,7 +225,7 @@ int main(void)
 		/* Render here */
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		glDrawElements(GL_TRIANGLES, INDEX_BUFFER_1_SIZE, GL_UNSIGNED_INT, nullptr);
+		GLCALL(glDrawElements(GL_TRIANGLES, INDEX_BUFFER_1_SIZE, GL_UNSIGNED_INT, nullptr));
 
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);
