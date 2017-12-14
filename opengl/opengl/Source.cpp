@@ -219,6 +219,11 @@ int main(void)
 	GLuint program = CreateShader(shaderSource.vertexSource, shaderSource.fragmentSource);
 	glUseProgram(program);
 
+	GLCALL(GLint locationColor = glGetUniformLocation(program, "u_color"));
+	ASSERT(locationColor != -1);
+	float colorRed = 0.01;
+
+
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
 	{
@@ -227,6 +232,10 @@ int main(void)
 
 		GLCALL(glDrawElements(GL_TRIANGLES, INDEX_BUFFER_1_SIZE, GL_UNSIGNED_INT, nullptr));
 
+		
+		GLCALL(glUniform4f(locationColor,  colorRed, 0.1, 0.3, 0));
+		colorRed = colorRed + 0.00001;
+		
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);
 
