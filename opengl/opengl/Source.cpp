@@ -6,29 +6,10 @@
 #include <string>
 #include <sstream>
 
-#define ASSERT(x)	if(!(x)) __debugbreak();
-#define GLCALL(x)	GLClearError();\
-					x;\
-					ASSERT(GLErrorLog(#x, __FILE__, __LINE__))
+#include "renderer.h"
+#include "vertexbuffer.h"
+#include "indexbuffer.h"
 
-void GLClearError(void)
-{
-	while(glGetError() != GL_NO_ERROR){
-		//do nothing
-	}
-}
-
-bool GLErrorLog(char* functionName, char* file, int line)
-{
-	while(GLenum error = glGetError()){
-		std::cout << "GL Error: [" << error << "]" << std::endl;
-		std::cout << "Funcation Name: " << functionName << std::endl;
-		std::cout << "File Name: " << file << " at Line no. '" << line << "'" << std::endl; 
-		return false;
-	}
-
-	return true;
-}
 
 struct shaderProgramSourceType
 {
@@ -125,6 +106,11 @@ int main(void)
 	if (!glfwInit())
 		return -1;
 
+	// Setting opengl version and profile
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	//glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
 
 	/* Create a windowed mode window and its OpenGL context */
 	window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
@@ -133,6 +119,7 @@ int main(void)
 		glfwTerminate();
 		return -1;
 	}
+
 
 	/* Make the window's context current */
 	glfwMakeContextCurrent(window);
@@ -164,12 +151,13 @@ int main(void)
 
 
 
+	
+	//Vertex array object
+	GLuint vertexArrayObject;
+	GLCALL(glGenVertexArrays(1, &vertexArrayObject));
+	GLCALL(glBindVertexArray(vertexArrayObject));
+	
 	//Vertex Buffers
-	//Buffer ID's
-	GLuint	buffer1 = 0;
-
-	//Buffer Size
-	const unsigned int BUFFER_1_SIZE = 8U;
 
 	//Buffer data info
 	const unsigned int BUFFER_1_POSITION_INDEX = 0U;
@@ -177,30 +165,21 @@ int main(void)
 	const unsigned int BUFFER_1_POSITION_SIZE = 2U;
 	const void*	BUFFER_1_POSITION_OFFSET_POINTER = NULL;
 
-
-	//Buffer Data
-	float	bufferData1[BUFFER_1_SIZE] = {
+	float	bufferData1[] = {
 									-0.5f, -0.5f, //0
 									 0.5f, -0.5f, //1
 									 0.5f,  0.5f, //2
 									-0.5f,  0.5f  //3
 	};
 
-	glGenBuffers(1, &buffer1);
-
-	//Buffer linking and assigning data
-	glBindBuffer(GL_ARRAY_BUFFER, buffer1);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(bufferData1), bufferData1, GL_STATIC_DRAW);
+	VertexBuffer vertexBuffer(bufferData1, sizeof(bufferData1));
 	glVertexAttribPointer(BUFFER_1_POSITION_INDEX, BUFFER_1_POSITION_SIZE, GL_FLOAT, GL_FALSE,
 		BUFFER_1_POSITION_STRIDE_BYES, BUFFER_1_POSITION_OFFSET_POINTER);
 	glEnableVertexAttribArray(BUFFER_1_POSITION_INDEX);
 
 	//Index Buffer
-	GLuint index1 = 0;
-
 	//Index Buffer Data info
 	const unsigned int INDEX_BUFFER_1_SIZE = 6U;
-	const unsigned int INDEX_BUFFER_1_INDEX = 0U;
 
 	//Index Buffer Data
 	unsigned int indexBufferData[INDEX_BUFFER_1_SIZE] = {
@@ -208,11 +187,8 @@ int main(void)
 										2,	3,	0
 	};
 
-	glGenBuffers(1, &index1);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index1);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indexBufferData), indexBufferData, GL_STATIC_DRAW);
 
-
+	IndexBuffer indexBuffer(indexBufferData, INDEX_BUFFER_1_SIZE);
 
 	shaderProgramSourceType shaderSource = ParseShader((std::string)"res/shaders/basic.shader");
 
@@ -223,6 +199,9 @@ int main(void)
 	ASSERT(locationColor != -1);
 	float colorRed = 0.01;
 
+	GLCALL(glUseProgram(0));
+	GLCALL(glBindVertexArray(0));
+	indexBuffer.UnBind();
 
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
@@ -230,10 +209,16 @@ int main(void)
 		/* Render here */
 		glClear(GL_COLOR_BUFFER_BIT);
 
+		GLCALL(glUseProgram(program));
+		GLCALL(glUniform4f(locationColor,  colorRed, 0.1, 0.3, 0));
+
+		GLCALL(glBindVertexArray(vertexArrayObject));
+		GLCALL(glEnableVertexAttribArray(BUFFER_1_POSITION_INDEX));
+		indexBuffer.Bind();
+
 		GLCALL(glDrawElements(GL_TRIANGLES, INDEX_BUFFER_1_SIZE, GL_UNSIGNED_INT, nullptr));
 
 		
-		GLCALL(glUniform4f(locationColor,  colorRed, 0.1, 0.3, 0));
 		colorRed = colorRed + 0.00001;
 		
 		/* Swap front and back buffers */

@@ -1,6 +1,9 @@
-﻿  Source.cpp
-e:\dev\opengl\opengl\source.cpp(224): warning C4305: 'initializing': truncation from 'double' to 'float'
-e:\dev\opengl\opengl\source.cpp(236): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
-e:\dev\opengl\opengl\source.cpp(237): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+﻿  vertexbuffer.cpp
+  indexbuffer.cpp
+  Source.cpp
+e:\dev\opengl\opengl\source.cpp(200): warning C4305: 'initializing': truncation from 'double' to 'float'
+e:\dev\opengl\opengl\source.cpp(213): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+e:\dev\opengl\opengl\source.cpp(222): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  Generating Code...
   opengl.vcxproj -> E:\dev\opengl\opengl\bin\Debug\opengl.exe
   opengl.vcxproj -> E:\dev\opengl\opengl\bin\Debug\opengl.pdb (Partial PDB)

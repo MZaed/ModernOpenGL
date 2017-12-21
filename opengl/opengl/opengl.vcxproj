@@ -129,10 +129,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="indexbuffer.cpp" />
+    <ClCompile Include="renderer.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="vertexbuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
     <None Include="res\shaders\basic.shader" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="indexbuffer.h" />
+    <ClInclude Include="renderer.h" />
+    <ClInclude Include="vertexbuffer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
