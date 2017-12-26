@@ -129,19 +129,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="indexbuffer.cpp" />
-    <ClCompile Include="renderer.cpp" />
-    <ClCompile Include="Source.cpp" />
-    <ClCompile Include="vertexbuffer.cpp" />
+    <ClCompile Include="src\vertexbufferlayout.cpp" />
+    <ClCompile Include="src\indexbuffer.cpp" />
+    <ClCompile Include="src\renderer.cpp" />
+    <ClCompile Include="src\Source.cpp" />
+    <ClCompile Include="src\vertexbuffer.cpp" />
+    <ClCompile Include="src\vertexarray.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
     <None Include="res\shaders\basic.shader" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="indexbuffer.h" />
-    <ClInclude Include="renderer.h" />
-    <ClInclude Include="vertexbuffer.h" />
+    <ClInclude Include="inc\indexbuffer.h" />
+    <ClInclude Include="inc\renderer.h" />
+    <ClInclude Include="inc\vertexbuffer.h" />
+    <ClInclude Include="inc\vertexarray.h" />
+    <ClInclude Include="inc\vertexbufferlayout.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
