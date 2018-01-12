@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DEFECTS>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>e:\source code\opengl\opengl\opengl\src\</FILEPATH>
+      <FILENAME>source.cpp</FILENAME>
+      <LINE>51</LINE>
+      <COLUMN>31</COLUMN>
+    </SFA>
+    <DEFECTCODE>6385</DEFECTCODE>
+    <DESCRIPTION>Reading invalid data from 'ss':  the readable size is '352' bytes, but '-176' bytes may be read.</DESCRIPTION>
+    <FUNCTION>ParseShader</FUNCTION>
+    <DECORATED>?ParseShader@@YA?AUshaderProgramSourceType@@AAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z</DECORATED>
+    <FUNCLINE>21</FUNCLINE>
+    <PROBABILITY>1</PROBABILITY>
+    <RANK>4</RANK>
+    <CATEGORY>
+      <RULECATEGORY>mspft</RULECATEGORY>
+    </CATEGORY>
+    <PATH>
+      <SFA>
+        <FILEPATH>e:\source code\opengl\opengl\opengl\src\</FILEPATH>
+        <FILENAME>source.cpp</FILENAME>
+        <LINE>23</LINE>
+        <COLUMN>12</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>e:\source code\opengl\opengl\opengl\src\</FILEPATH>
+        <FILENAME>source.cpp</FILENAME>
+        <LINE>28</LINE>
+        <COLUMN>15</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>e:\source code\opengl\opengl\opengl\src\</FILEPATH>
+        <FILENAME>source.cpp</FILENAME>
+        <LINE>29</LINE>
+        <COLUMN>13</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>e:\source code\opengl\opengl\opengl\src\</FILEPATH>
+        <FILENAME>source.cpp</FILENAME>
+        <LINE>30</LINE>
+        <COLUMN>19</COLUMN>
+        <KEYEVENT>
+          <ID>1</ID>
+          <KIND>declaration</KIND>
+          <IMPORTANCE>Essential</IMPORTANCE>
+          <MESSAGE>'ss' is an array of 2 elements (352 bytes)</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>e:\source code\opengl\opengl\opengl\src\</FILEPATH>
+        <FILENAME>source.cpp</FILENAME>
+        <LINE>31</LINE>
+        <COLUMN>12</COLUMN>
+        <KEYEVENT>
+          <ID>2</ID>
+          <KIND>declaration</KIND>
+          <IMPORTANCE>Essential</IMPORTANCE>
+          <MESSAGE>'shaderType' is equal to -1</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>e:\source code\opengl\opengl\opengl\src\</FILEPATH>
+        <FILENAME>source.cpp</FILENAME>
+        <LINE>33</LINE>
+        <COLUMN>15</COLUMN>
+        <KEYEVENT>
+          <ID>3</ID>
+          <KIND>branch</KIND>
+          <IMPORTANCE>Full</IMPORTANCE>
+          <MESSAGE>Enter this loop, (assume 'getline(stream, line)-&gt;._N()')</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>e:\source code\opengl\opengl\opengl\src\</FILEPATH>
+        <FILENAME>source.cpp</FILENAME>
+        <LINE>35</LINE>
+        <COLUMN>26</COLUMN>
+        <KEYEVENT>
+          <ID>4</ID>
+          <KIND>branch</KIND>
+          <IMPORTANCE>Full</IMPORTANCE>
+          <MESSAGE>Skip this branch, (assume 'line.find("SHADER", 0)!=npos' is false)</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>e:\source code\opengl\opengl\opengl\src\</FILEPATH>
+        <FILENAME>source.cpp</FILENAME>
+        <LINE>51</LINE>
+        <COLUMN>31</COLUMN>
+        <KEYEVENT>
+          <ID>5</ID>
+          <KIND>declaration</KIND>
+          <IMPORTANCE>Full</IMPORTANCE>
+          <MESSAGE>'ss' is an Output from 'std::&lt;&lt;' (declared at c:\program files (x86)\microsoft visual studio 14.0\vc\include\string:167)</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>e:\source code\opengl\opengl\opengl\src\</FILEPATH>
+        <FILENAME>source.cpp</FILENAME>
+        <LINE>51</LINE>
+        <COLUMN>31</COLUMN>
+        <KEYEVENT>
+          <ID>6</ID>
+          <KIND>usage</KIND>
+          <IMPORTANCE>Essential</IMPORTANCE>
+          <MESSAGE>Invalid read from 'ss[-1]', (readable range is 0 to 1)</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+    </PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>e:\source code\opengl\opengl\opengl\src\</FILEPATH>
+      <FILENAME>source.cpp</FILENAME>
+      <LINE>72</LINE>
+      <COLUMN>31</COLUMN>
+    </SFA>
+    <DEFECTCODE>6255</DEFECTCODE>
+    <DESCRIPTION>_alloca indicates failure by raising a stack overflow exception.  Consider using _malloca instead.</DESCRIPTION>
+    <FUNCTION>CompileShader</FUNCTION>
+    <DECORATED>?CompileShader@@YAIABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@I@Z</DECORATED>
+    <FUNCLINE>59</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+</DEFECTS>
