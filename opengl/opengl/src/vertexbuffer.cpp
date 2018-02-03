@@ -1,4 +1,8 @@
+#include <GL/glew.h>
+#include <glerrorcheck.h>
+
 #include "vertexbuffer.h"
+
 
 
 

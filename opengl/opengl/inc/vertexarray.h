@@ -1,6 +1,8 @@
 #pragma once
-#include "vertexbuffer.h"
-#include "vertexbufferlayout.h"
+
+// Forward Declarations
+class VertexBuffer;
+class VertexBufferLayout;
 
 
   

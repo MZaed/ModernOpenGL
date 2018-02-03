@@ -1,8 +1,10 @@
 #include <fstream>
 #include <sstream>
+#include <GL/glew.h>
+#include <glerrorcheck.h>
 
 #include "shader.h"
-#include "renderer.h"
+
 
 Shader::Shader(const std::string&  filePath)
 	:m_filePath(filePath),

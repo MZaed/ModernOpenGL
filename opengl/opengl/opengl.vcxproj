@@ -129,6 +129,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\glerrorcheck.cpp" />
     <ClCompile Include="src\shader.cpp" />
     <ClCompile Include="src\vertexbufferlayout.cpp" />
     <ClCompile Include="src\indexbuffer.cpp" />
@@ -142,6 +143,7 @@
     <None Include="res\shaders\basic.shader" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="inc\glerrorcheck.h" />
     <ClInclude Include="inc\shader.h" />
     <ClInclude Include="inc\indexbuffer.h" />
     <ClInclude Include="inc\renderer.h" />

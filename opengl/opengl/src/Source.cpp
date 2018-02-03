@@ -7,8 +7,10 @@
 
 #include "renderer.h"
 #include "vertexbuffer.h"
+#include "vertexbufferlayout.h"
 #include "indexbuffer.h"
 #include "vertexarray.h"
+#include "glerrorcheck.h"
 #include "shader.h"
 
 
@@ -45,28 +47,6 @@ int main(void)
 	}
 
 	std::cout << glGetString(GL_VERSION) << std::endl;
-
-
-
-	// 3+--------------------------------.2 
-	//  |                              ,'|  
-	//  |                           ,-`  |  
-	//  |                         ,'     |  
-	//  |                       .`       |  
-	//  |                     .`         |  
-	//  |                   ,'           |  
-	//  |                ,-`             |  
-	//  |              ,'                |  
-	//  |            .`                  |  
-	//  |          .`                    |  
-	//  |        ,'                      |  
-	//  |     ,-`                        |  
-	//  |   ,'                           |  
-	//  | .`                             |  
-	// 0-`-------------------------------+1 
-
-
-
 	
 	//Vertex array object
 	VertexArray va;	
@@ -104,23 +84,22 @@ int main(void)
 	va.UnBind();
 	vertexBuffer.UnBind();
 	indexBuffer.UnBind();
+
+	Renderer renderer;
 	
 
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
 	{
 		/* Render here */
-		glClear(GL_COLOR_BUFFER_BIT);
-
-		// Binding objects
+		renderer.clear();
+		
 		shader.Bind();
-		va.Bind();
-		vertexBuffer.Bind();
-		indexBuffer.Bind();
-
 		shader.SetUniform4f("u_color", colorRed, 0.1F, 0.3F, 0);
-
-		GLCALL(glDrawElements(GL_TRIANGLES, INDEX_BUFFER_1_SIZE, GL_UNSIGNED_INT, nullptr));
+		
+		renderer.Draw(va, indexBuffer, shader);
+		
+		
 		
 		colorRed = colorRed + 0.00001F;
 		

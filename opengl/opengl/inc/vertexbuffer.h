@@ -1,5 +1,5 @@
 #pragma once
-#include "renderer.h"
+#include <GL/glew.h>
 
 class VertexBuffer
 {

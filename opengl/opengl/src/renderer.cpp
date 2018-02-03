@@ -1,5 +1,8 @@
+#include <GL/glew.h>
+#include <glerrorcheck.h>
+
 #include "renderer.h"
-#include <iostream>
+
 
 
 
@@ -13,24 +16,21 @@ Renderer::~Renderer()
 {
 }
 
-
-
-
-void GLClearError(void)
+void Renderer::Draw(const VertexArray & va, const IndexBuffer & ib, const Shader & shader) const
 {
-	while(glGetError() != GL_NO_ERROR){
-		//do nothing
-	}
+	// Binding objects
+	shader.Bind();
+	va.Bind();
+	ib.Bind();
+
+	GLCALL(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
 }
 
-bool GLErrorLog(char* functionName, char* file, int line)
+void Renderer::clear() const
 {
-	while(GLenum error = glGetError()){
-		std::cout << "GL Error: [" << error << "]" << std::endl;
-		std::cout << "Funcation Name: " << functionName << std::endl;
-		std::cout << "File Name: " << file << " at Line no. '" << line << "'" << std::endl; 
-		return false;
-	}
-
-	return true;
+	glClear(GL_COLOR_BUFFER_BIT);
 }
+
+
+
+
