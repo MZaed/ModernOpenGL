@@ -17,13 +17,13 @@ Renderer::~Renderer()
 }
 
 void Renderer::Draw(const VertexArray & va, const IndexBuffer & ib, const Shader & shader) const
-{
+{ 
 	// Binding objects
 	shader.Bind();
 	va.Bind();
 	ib.Bind();
 
-	GLCALL(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
+	GLCALL(glDrawElements(GL_TRIANGLES, sizeof(ib), GL_UNSIGNED_INT, nullptr));
 }
 
 void Renderer::clear() const

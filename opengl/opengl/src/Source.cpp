@@ -11,6 +11,7 @@
 #include "indexbuffer.h"
 #include "vertexarray.h"
 #include "glerrorcheck.h"
+#include "texture2D.h"
 #include "shader.h"
 
 
@@ -52,14 +53,15 @@ int main(void)
 	VertexArray va;	
 	
 	float	bufferData1[] = {
-									-0.5f, -0.5f, //0
-									 0.5f, -0.5f, //1
-									 0.5f,  0.5f, //2
-									-0.5f,  0.5f  //3
+									-0.5f, -0.5f, 0.0f, 0.0f,//0
+									 0.5f, -0.5f, 1.0f, 0.0f,//1
+									 0.5f,  0.5f, 1.0f, 1.0f,//2
+									-0.5f,  0.5f, 0.0f, 1.0f //3
 	};
 
 	VertexBuffer vertexBuffer(bufferData1, sizeof(bufferData1));
 	VertexBufferLayout layout;
+	layout.Push<float>(2);
 	layout.Push<float>(2);
 	va.AddBuffer(vertexBuffer, layout);
 	
@@ -76,8 +78,10 @@ int main(void)
 
 	Shader shader((std::string)"res/shaders/basic.shader");
 	shader.Bind();
-	
-	float colorRed = 0.01F;
+	shader.SetUniform1i("u_texture", 0);  
+
+	Texture2D texture2D((std::string)"res/textures/coolDarkWallpaper.png");
+	texture2D.Bind();
 
 	// Unbinding objects	
 	shader.UnBind();
@@ -95,13 +99,8 @@ int main(void)
 		renderer.clear();
 		
 		shader.Bind();
-		shader.SetUniform4f("u_color", colorRed, 0.1F, 0.3F, 0);
 		
 		renderer.Draw(va, indexBuffer, shader);
-		
-		
-		
-		colorRed = colorRed + 0.00001F;
 		
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);

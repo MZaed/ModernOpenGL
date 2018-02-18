@@ -69,14 +69,14 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)opengl\inc\;</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)opengl\inc\;$(SolutionDir)opengl\</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86;$(SolutionDir)opengl\lib\;</LibraryPath>
     <SourcePath>$(VC_SourcePath);$(SolutionDir)opengl\src\;</SourcePath>
     <OutDir>$(SolutionDir)opengl\bin\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)opengl\bin\intermediate\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)opengl\inc\;</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)opengl\inc\;$(SolutionDir)opengl\</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86;$(SolutionDir)opengl\lib\;</LibraryPath>
     <SourcePath>$(VC_SourcePath);$(SolutionDir)opengl\src\;</SourcePath>
     <OutDir>$(SolutionDir)opengl\bin\$(Configuration)\</OutDir>
@@ -129,6 +129,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ext\stb_image.cpp" />
     <ClCompile Include="src\glerrorcheck.cpp" />
     <ClCompile Include="src\shader.cpp" />
     <ClCompile Include="src\vertexbufferlayout.cpp" />
@@ -137,12 +138,14 @@
     <ClCompile Include="src\Source.cpp" />
     <ClCompile Include="src\vertexbuffer.cpp" />
     <ClCompile Include="src\vertexarray.cpp" />
+    <ClCompile Include="src\texture2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
     <None Include="res\shaders\basic.shader" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ext\stb_image.h" />
     <ClInclude Include="inc\glerrorcheck.h" />
     <ClInclude Include="inc\shader.h" />
     <ClInclude Include="inc\indexbuffer.h" />
@@ -150,6 +153,7 @@
     <ClInclude Include="inc\vertexbuffer.h" />
     <ClInclude Include="inc\vertexarray.h" />
     <ClInclude Include="inc\vertexbufferlayout.h" />
+    <ClInclude Include="inc\texture2D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
