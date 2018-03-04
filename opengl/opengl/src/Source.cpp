@@ -13,8 +13,8 @@
 #include "glerrorcheck.h"
 #include "texture2D.h"
 #include "shader.h"
-
-
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
 
 
 int main(void)
@@ -78,7 +78,12 @@ int main(void)
 
 	Shader shader((std::string)"res/shaders/basic.shader");
 	shader.Bind();
-	shader.SetUniform1i("u_texture", 0);  
+
+	glm::mat4 projectionMatrix = glm::ortho(-2.0f, 2.0f, -1.5f, 1.5f);
+	shader.SetUniformMat4fv("u_MVP", projectionMatrix);
+
+
+	shader.SetUniform1i("u_texture", 0); 
 
 	Texture2D texture2D((std::string)"res/textures/coolDarkWallpaper.png");
 	texture2D.Bind();
@@ -89,6 +94,8 @@ int main(void)
 	vertexBuffer.UnBind();
 	indexBuffer.UnBind();
 
+	GLCALL(glEnable(GL_BLEND));
+	GLCALL(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 	Renderer renderer;
 	
 

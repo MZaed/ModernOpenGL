@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <GL/glew.h>
+#include <glm/glm.hpp>
 
 struct shaderProgramSourceType
 {
@@ -23,6 +24,8 @@ public:
 	void SetUniform4f(const std::string& name, float v0, float v1, float v2, float v3);
 
 	void SetUniform1i(const std::string& name, int value);
+
+	void SetUniformMat4fv(const std::string & name, const glm::mat4& mat4);
 
 
 

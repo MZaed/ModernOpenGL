@@ -12,6 +12,11 @@ e:\source code\opengl\opengl\opengl\bin\intermediate\debug\source.obj
 e:\source code\opengl\opengl\opengl\bin\intermediate\debug\renderer.obj
 e:\source code\opengl\opengl\opengl\bin\intermediate\debug\indexbuffer.obj
 e:\source code\opengl\opengl\opengl\bin\intermediate\debug\vertexbufferlayout.obj
+e:\source code\opengl\opengl\opengl\bin\intermediate\debug\shader.obj
+e:\source code\opengl\opengl\opengl\bin\intermediate\debug\glerrorcheck.obj
+e:\source code\opengl\opengl\opengl\bin\intermediate\debug\stb_image.obj
+e:\source code\opengl\opengl\opengl\bin\intermediate\debug\texture2d.obj
+e:\source code\opengl\opengl\opengl\bin\intermediate\debug\dummy.obj
 e:\source code\opengl\opengl\opengl\bin\debug\opengl.ilk
 e:\source code\opengl\opengl\opengl\bin\debug\opengl.exe
 e:\source code\opengl\opengl\opengl\bin\debug\opengl.pdb
