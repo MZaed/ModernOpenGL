@@ -53,10 +53,10 @@ int main(void)
 	VertexArray va;	
 	
 	float	bufferData1[] = {
-									-0.5f, -0.5f, 0.0f, 0.0f,//0
-									 0.5f, -0.5f, 1.0f, 0.0f,//1
-									 0.5f,  0.5f, 1.0f, 1.0f,//2
-									-0.5f,  0.5f, 0.0f, 1.0f //3
+									100.0f, 100.0f, 0.0f, 0.0f,//0
+									100.0f, 540.0f, 1.0f, 0.0f,//1
+									100.0f, 380.0f, 1.0f, 1.0f,//2
+									540.0f, 380.0f, 0.0f, 1.0f //3
 	};
 
 	VertexBuffer vertexBuffer(bufferData1, sizeof(bufferData1));
@@ -79,7 +79,7 @@ int main(void)
 	Shader shader((std::string)"res/shaders/basic.shader");
 	shader.Bind();
 
-	glm::mat4 projectionMatrix = glm::ortho(-2.0f, 2.0f, -1.5f, 1.5f);
+	glm::mat4 projectionMatrix = glm::ortho(0.0f, 640.0f, 0.00f, 480.0f);
 	shader.SetUniformMat4fv("u_MVP", projectionMatrix);
 
 
