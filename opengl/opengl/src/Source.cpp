@@ -54,9 +54,9 @@ int main(void)
 	
 	float	bufferData1[] = {
 									100.0f, 100.0f, 0.0f, 0.0f,//0
-									100.0f, 540.0f, 1.0f, 0.0f,//1
-									100.0f, 380.0f, 1.0f, 1.0f,//2
-									540.0f, 380.0f, 0.0f, 1.0f //3
+									100.0f, 240.0f, 0.0f, 1.0f,//1
+									240.0f, 100.0f, 1.0f, 0.0f,//2
+									240.0f, 240.0f, 1.0f, 1.0f //3
 	};
 
 	VertexBuffer vertexBuffer(bufferData1, sizeof(bufferData1));
@@ -71,7 +71,7 @@ int main(void)
 	//Index Buffer Data
 	unsigned int indexBufferData[INDEX_BUFFER_1_SIZE] = {
 										0,	1,	2,
-										2,	3,	0
+										1,	2,	3
 	};
 
 	IndexBuffer indexBuffer(indexBufferData, INDEX_BUFFER_1_SIZE);
@@ -79,8 +79,11 @@ int main(void)
 	Shader shader((std::string)"res/shaders/basic.shader");
 	shader.Bind();
 
-	glm::mat4 projectionMatrix = glm::ortho(0.0f, 640.0f, 0.00f, 480.0f);
-	shader.SetUniformMat4fv("u_MVP", projectionMatrix);
+	glm::mat4 projection= glm::ortho(0.0f, 960.0f, 0.00f, 540.0f, -1.0f, 1.0f);
+	glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(-100, 0, 0));
+	glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(200.0f, 200.0f, 0.0f));
+	glm::mat4 mvp = projection * view * model;
+	shader.SetUniformMat4fv("u_MVP", mvp);
 
 
 	shader.SetUniform1i("u_texture", 0); 
