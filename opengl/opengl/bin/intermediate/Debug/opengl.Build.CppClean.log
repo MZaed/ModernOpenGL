@@ -1,5 +1,6 @@
 e:\source code\opengl\opengl\opengl\bin\intermediate\debug\vc140.pdb
 e:\source code\opengl\opengl\opengl\bin\intermediate\debug\vc140.idb
+e:\source code\opengl\opengl\opengl\bin\intermediate\debug\glm.obj
 e:\source code\opengl\opengl\opengl\bin\intermediate\debug\stb_image.obj
 e:\source code\opengl\opengl\opengl\bin\intermediate\debug\glerrorcheck.obj
 e:\source code\opengl\opengl\opengl\bin\intermediate\debug\shader.obj
@@ -10,7 +11,6 @@ e:\source code\opengl\opengl\opengl\bin\intermediate\debug\source.obj
 e:\source code\opengl\opengl\opengl\bin\intermediate\debug\vertexbuffer.obj
 e:\source code\opengl\opengl\opengl\bin\intermediate\debug\vertexarray.obj
 e:\source code\opengl\opengl\opengl\bin\intermediate\debug\texture2d.obj
-e:\source code\opengl\opengl\opengl\bin\intermediate\debug\glm.obj
 e:\source code\opengl\opengl\opengl\bin\debug\opengl.ilk
 e:\source code\opengl\opengl\opengl\bin\debug\opengl.exe
 e:\source code\opengl\opengl\opengl\bin\debug\opengl.pdb

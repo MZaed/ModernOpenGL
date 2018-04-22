@@ -130,6 +130,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ext\glm\detail\glm.cpp" />
+    <ClCompile Include="ext\imgui\imgui.cpp" />
+    <ClCompile Include="ext\imgui\imgui_demo.cpp" />
+    <ClCompile Include="ext\imgui\imgui_draw.cpp" />
+    <ClCompile Include="ext\imgui\imgui_impl_glfw_gl3.cpp" />
     <ClCompile Include="ext\stb_image.cpp" />
     <ClCompile Include="src\glerrorcheck.cpp" />
     <ClCompile Include="src\shader.cpp" />
@@ -401,6 +405,13 @@
     <ClInclude Include="ext\glm\vec3.hpp" />
     <ClInclude Include="ext\glm\vec4.hpp" />
     <ClInclude Include="ext\glm\vector_relational.hpp" />
+    <ClInclude Include="ext\imgui\imconfig.h" />
+    <ClInclude Include="ext\imgui\imgui.h" />
+    <ClInclude Include="ext\imgui\imgui_impl_glfw_gl3.h" />
+    <ClInclude Include="ext\imgui\imgui_internal.h" />
+    <ClInclude Include="ext\imgui\stb_rect_pack.h" />
+    <ClInclude Include="ext\imgui\stb_textedit.h" />
+    <ClInclude Include="ext\imgui\stb_truetype.h" />
     <ClInclude Include="ext\stb_image.h" />
     <ClInclude Include="inc\glerrorcheck.h" />
     <ClInclude Include="inc\shader.h" />

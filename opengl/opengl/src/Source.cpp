@@ -15,6 +15,8 @@
 #include "shader.h"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
+#include "imgui/imgui.h"
+#include "imgui/imgui_impl_glfw_gl3.h"
 
 
 int main(void)
@@ -53,10 +55,10 @@ int main(void)
 	VertexArray va;	
 	
 	float	bufferData1[] = {
-									100.0f, 100.0f, 0.0f, 0.0f,//0
-									100.0f, 240.0f, 0.0f, 1.0f,//1
-									240.0f, 100.0f, 1.0f, 0.0f,//2
-									240.0f, 240.0f, 1.0f, 1.0f //3
+									00.0f, 00.0f, 0.0f, 0.0f,//0
+									00.0f, 100.0f, 0.0f, 1.0f,//1
+									100.0f, 00.0f, 1.0f, 0.0f,//2
+									100.0f, 100.0f, 1.0f, 1.0f //3
 	};
 
 	VertexBuffer vertexBuffer(bufferData1, sizeof(bufferData1));
@@ -81,9 +83,7 @@ int main(void)
 
 	glm::mat4 projection= glm::ortho(0.0f, 960.0f, 0.00f, 540.0f, -1.0f, 1.0f);
 	glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(-100, 0, 0));
-	glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(200.0f, 200.0f, 0.0f));
-	glm::mat4 mvp = projection * view * model;
-	shader.SetUniformMat4fv("u_MVP", mvp);
+
 
 
 	shader.SetUniform1i("u_texture", 0); 
@@ -101,16 +101,29 @@ int main(void)
 	GLCALL(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 	Renderer renderer;
 	
+	// Setup ImGui binding
+    ImGui::CreateContext();
+	ImGui_ImplGlfwGL3_Init(window, true);
+    ImGui::StyleColorsDark();
 
+	glm::vec3 translate(200.0f, 200.0f, 0.0f);
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
 	{
 		/* Render here */
 		renderer.clear();
-		
+		ImGui_ImplGlfwGL3_NewFrame();
+
 		shader.Bind();
+		glm::mat4 model = glm::translate(glm::mat4(1.0f), translate);
+		glm::mat4 mvp = projection * view * model;
+		shader.SetUniformMat4fv("u_MVP", mvp);
+		ImGui::SliderFloat("Model: Translate along X", &translate.x, 0.0f, 960.0f);
+		ImGui::SliderFloat("Model: Translate along Y", &translate.y, 0.0f, 540.0f);
 		
 		renderer.Draw(va, indexBuffer, shader);
+		ImGui::Render();
+        ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
 		
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);
@@ -119,7 +132,8 @@ int main(void)
 		glfwPollEvents();
 	}
 
-
+	ImGui_ImplGlfwGL3_Shutdown();
+    ImGui::DestroyContext();
 	glfwTerminate();
 
 
