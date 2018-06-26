@@ -55,10 +55,10 @@ int main(void)
 	VertexArray va;	
 	
 	float	bufferData1[] = {
-									00.0f, 00.0f, 0.0f, 0.0f,//0
-									00.0f, 100.0f, 0.0f, 1.0f,//1
-									100.0f, 00.0f, 1.0f, 0.0f,//2
-									100.0f, 100.0f, 1.0f, 1.0f //3
+									-50.0f,  -50.0f, 0.0f, 0.0f,//0
+									 50.0f,  -50.0f, 1.0f, 0.0f,//1
+									 50.0f,   50.0f, 1.0f, 1.0f,//2
+									-50.0f,   50.0f, 0.0f, 1.0f //3
 	};
 
 	VertexBuffer vertexBuffer(bufferData1, sizeof(bufferData1));
@@ -73,7 +73,7 @@ int main(void)
 	//Index Buffer Data
 	unsigned int indexBufferData[INDEX_BUFFER_1_SIZE] = {
 										0,	1,	2,
-										1,	2,	3
+										2,	3,	0
 	};
 
 	IndexBuffer indexBuffer(indexBufferData, INDEX_BUFFER_1_SIZE);
@@ -82,7 +82,7 @@ int main(void)
 	shader.Bind();
 
 	glm::mat4 projection= glm::ortho(0.0f, 960.0f, 0.00f, 540.0f, -1.0f, 1.0f);
-	glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(-100, 0, 0));
+	glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(00, 0, 0));
 
 
 
@@ -106,7 +106,8 @@ int main(void)
 	ImGui_ImplGlfwGL3_Init(window, true);
     ImGui::StyleColorsDark();
 
-	glm::vec3 translate(200.0f, 200.0f, 0.0f);
+	glm::vec3 translateA(200.0f, 200.0f, 0.0f);
+	glm::vec3 translateB(200.0f, 300.0f, 0.0f);
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
 	{
@@ -115,14 +116,34 @@ int main(void)
 		ImGui_ImplGlfwGL3_NewFrame();
 
 		shader.Bind();
-		glm::mat4 model = glm::translate(glm::mat4(1.0f), translate);
-		glm::mat4 mvp = projection * view * model;
-		shader.SetUniformMat4fv("u_MVP", mvp);
-		ImGui::SliderFloat("Model: Translate along X", &translate.x, 0.0f, 960.0f);
-		ImGui::SliderFloat("Model: Translate along Y", &translate.y, 0.0f, 540.0f);
+
+		//Render Model A
+		{
+			glm::mat4 model = glm::translate(glm::mat4(1.0f), translateA);
+			glm::mat4 mvp = projection * view * model;
+
+			shader.SetUniformMat4fv("u_MVP", mvp);
+			renderer.Draw(va, indexBuffer, shader);
+
+		}
+
+		//Render Model B
+		{
+			glm::mat4 model = glm::translate(glm::mat4(1.0f), translateB);
+			glm::mat4 mvp = projection * view * model;
+			shader.SetUniformMat4fv("u_MVP", mvp);
+			renderer.Draw(va, indexBuffer, shader);
+		}
+
+		ImGui::SliderFloat("ModelA: Translate along X", &translateA.x, 0.0f, 960.0f);
+		ImGui::SliderFloat("ModelA: Translate along Y", &translateA.y, 0.0f, 540.0f);
+		ImGui::SliderFloat("ModelB: Translate along X", &translateB.x, 0.0f, 960.0f);
+		ImGui::SliderFloat("ModelB: Translate along Y", &translateB.y, 0.0f, 540.0f);
 		
-		renderer.Draw(va, indexBuffer, shader);
 		ImGui::Render();
+
+
+
         ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
 		
 		/* Swap front and back buffers */
