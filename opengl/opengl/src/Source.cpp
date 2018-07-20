@@ -83,7 +83,7 @@ int main(void)
 		{
 			currentTest->onUpdate(0.0f);
 			currentTest->onRender();
-			ImGui::Begin("Test");
+			ImGui::Begin("Test", NULL, ImGuiWindowFlags_AlwaysAutoResize);
 
 			if ((currentTest != testMenu) && (ImGui::Button("<-")))
 			{
